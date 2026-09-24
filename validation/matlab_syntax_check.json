@@ -1,0 +1,5 @@
+{
+  "check": "Static MATLAB grammar only; not MATLAB execution",
+  "files_checked": 33,
+  "errors": []
+}

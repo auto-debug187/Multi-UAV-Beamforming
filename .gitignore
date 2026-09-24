@@ -1,0 +1,8 @@
+# MATLAB
+*.asv
+*.autosave
+slprj/
+*.slxc
+codegen/
+*.mex*
+*.mat.bak

@@ -1,0 +1,16 @@
+function bf_export(result,folder)
+if ~exist(folder,'dir'), mkdir(folder); end
+save(fullfile(folder,'simulation.mat'),'result','-v7.3');
+writetable(struct2table(result.summary),fullfile(folder,'summary.csv'));
+t=result.raw.t;
+T=table(t,result.centroidError,result.pointingDeg,result.axisErrorDeg, ...
+    result.edgeRMS,result.edgeMax,result.minSeparation,result.planarity, ...
+    result.snrDb,result.coherentLossDb,result.fixedPlaneSnrDb, ...
+    'VariableNames',{'time_s','centroid_error_m','pointing_error_deg','axis_error_deg', ...
+    'edge_rms_m','edge_max_m','minimum_separation_m','planarity_m','snr_dB', ...
+    'coherent_loss_dB','fixed_plane_snr_dB'});
+writetable(T,fullfile(folder,'metrics.csv'));
+fid=fopen(fullfile(folder,'configuration.json'),'w');
+assert(fid>=0,'Cannot create configuration.json.'); clean=onCleanup(@()fclose(fid));
+fprintf(fid,'%s',jsonencode(result.cfg,'PrettyPrint',true));
+end
